@@ -1,0 +1,317 @@
+#ifndef EXPERIMENTAMS_CLASS_H
+#define EXPERIMENTAMS_CLASS_H
+
+#include <string>
+#include <ctime>
+#include <utility>
+#include <iostream>
+#include <cstdio>
+#include "tool.h"
+#include <cmath>
+
+using namespace std;
+
+class Card // 储存卡的类
+{
+private:
+    string CardName; // 卡号
+    string CardPassword; // 密码
+    int CardStatus; // 0-未使用 1-使用中 2-已注销
+    time_t CreatTime; // 创建时间
+    time_t DeleteTime; // 注销时间
+    time_t LastTime; // 上次使用时间
+    double TotalUse; // 总消费额
+    int UseCount; // 消费次数
+    double Balance; // 当前余额
+    bool IsSettled; // 是否结清
+public:
+    /* 构造函数 */
+    Card() { ; } // 默认构造函数
+    Card(const string &name, const string &password, const double &money) // 构造函数
+    {
+        CardName = name;
+        CardPassword = password;
+        CardStatus = 0;
+        CreatTime = time(nullptr);
+        DeleteTime = 0;
+        LastTime = CreatTime;
+        TotalUse = 0;
+        UseCount = 0;
+        Balance = money;
+        IsSettled = true;
+    }
+
+    /* 内联成员函数 */
+    string Name() { return CardName; } // 获取卡名
+    int Status() const { return CardStatus; } // 获取卡状态
+    double GetBalance() const { return Balance; } // 获取余额
+    int SettleStat() const { return IsSettled; } // 获取结清状态
+    void Login() { CardStatus = 1; } // 更改卡状态为上机
+    void Logoff() // 更改卡状态为下机（更新使用时间、使用次数）
+    {
+        CardStatus = 0;
+        LastTime = time(nullptr);
+        UseCount++;
+    }
+    void Paid() { IsSettled = true; } // 更改卡为已结清
+    void UnPaid() { IsSettled = false; } // 更改卡为未结清
+    void Update(double value) { Balance += value; } // 更新余额
+    void Delete() // 注销卡
+    {
+        CardStatus = 2;
+        DeleteTime = time(nullptr);
+    }
+    void SetPassword(const string &password) { CardPassword = password; } // 更新密码
+
+    /* 一般成员函数 */
+    void Print(); // 直接输出Card的信息
+    void PrintBrief(); // 单行紧凑输出Card的信息
+    bool CheckPassword(const string &); // 比对账号密码用于上机登录
+    bool Charge(double); // 收费
+
+    /* 重载运算符 */
+    friend ostream &operator<<(ostream &, const Card &);
+    friend istream &operator>>(istream &, Card &);
+};
+
+class Bill // 储存账单的类
+{
+private:
+    string CardName; // 卡号
+    time_t StartTime; // 上机时间
+    time_t EndTime; // 下机时间
+    double Fare; // 金额
+    int Type; // 计费种类
+    bool IsPaid; // 是否结清
+public:
+    /* 构造函数 */
+    Bill() { ; } // 默认构造函数
+    Bill(const string &name, const int &type) // 构造函数-上机账单
+    {
+        CardName = name;
+        StartTime = time(nullptr);
+        EndTime = 0;
+        IsPaid = false;
+        Fare = 0;
+        Type = type;
+    }
+    Bill(const string &name, const double &value) // 构造函数-充退账单
+    {
+        CardName = name;
+        StartTime = time(nullptr);
+        EndTime = StartTime;
+        IsPaid = true;
+        Fare = value;
+        Type = -1;
+    }
+
+    /* 内联成员函数 */
+    void SetEnd(time_t t) { EndTime = t; } // 设置结束日期
+    void SetPaid() { IsPaid = true; } // 设置结清
+    void SetFare(double f) { Fare = f; } // 设置费用
+    string GetName() { return CardName; } // 获取卡号
+    bool Paid() const { return IsPaid; } // 获取是否结清
+    int GetType() const { return Type; } // 获取种类
+    time_t GetStart() const { return StartTime; } // 获取开始时间
+    time_t GetEnd() const { return EndTime; } // 获取结束时间
+    double GetFare() const { return Fare; } // 获取费用
+
+    /* 一般成员函数 */
+    void Print(); // 输出Bill的信息
+
+    /* 重载运算符 */
+    friend ostream &operator<<(ostream &, const Bill &);
+    friend istream &operator>>(istream &, Bill &);
+};
+
+class Price // 储存计费的类
+{
+private:
+    double PricePerHalfHour;
+    double PriceWholeNight;
+    double PriceWholeDay;
+    pair<int, int> NightRange;
+public:
+    /* 构造函数 */
+    Price() // 默认构造函数
+    {
+        PricePerHalfHour = 2.0;
+        PriceWholeNight = 27.0;
+        PriceWholeDay = 48.0;
+        NightRange.first = 22;
+        NightRange.second = 7;
+    }
+    Price(double P_HalfHour, double P_Night, double P_Day, int NightStart, int NightEnd) // 构造函数
+    {
+        PricePerHalfHour = P_HalfHour;
+        PriceWholeNight = P_Night;
+        PriceWholeDay = P_Day;
+        NightRange.first = NightStart;
+        NightRange.second = NightEnd;
+    }
+
+    /* 内联成员函数 */
+    pair<int, int> GetNightRange() { return NightRange; } // 获取包夜范围
+    void Print() // 输出价格
+    {
+        cout << left << setw(15) << "半小时价格: " << "￥" << fixed << setprecision(2) << PricePerHalfHour << endl
+             << left << setw(15) << "包夜价格: " << "￥" << fixed << setprecision(2) << PriceWholeNight << endl
+             << left << setw(15) << "包天价格: " << "￥" << fixed << setprecision(2) << PriceWholeDay << endl
+             << left << setw(15) << "包夜时间段: " << NightRange.first << '~' << NightRange.second << endl;
+    }
+
+    /* 一般成员函数 */
+    double CalcFare(const time_t &, const time_t &, const int &) const; // 计算费用 0-半小时计费 1-包夜 2-包天
+
+    /* 重载运算符 */
+    friend ostream &operator<<(ostream &, const Price &);
+    friend istream &operator>>(istream &, Price &);
+};
+
+struct YearMonthDay // 年月日结构体
+{
+    int Year, Month, Day;
+
+    /* 构造函数 */
+    YearMonthDay()
+    {
+        time_t t = time(nullptr);
+        tm *t_tm = localtime(&t);
+        Year = t_tm->tm_year + 1900;
+        Month = t_tm->tm_mon + 1;
+        Day = t_tm->tm_mday;
+    }
+    explicit YearMonthDay(time_t t)
+    {
+        tm *t_tm = localtime(&t);
+        Year = t_tm->tm_year + 1900;
+        Month = t_tm->tm_mon + 1;
+        Day = t_tm->tm_mday;
+    }
+    YearMonthDay(int y, int m, int d)
+    {
+        Year = y;
+        Month = m;
+        Day = d;
+    }
+
+    /* 重载运算符 */
+    bool operator<(const YearMonthDay &t) const
+    {
+        if (Year != t.Year)
+            return Year < t.Year;
+        else if (Month != t.Month)
+            return Month < t.Month;
+        else if (Day != t.Day)
+            return Day < t.Day;
+        else
+            return false;
+    }
+    bool operator==(const YearMonthDay &t) const
+    {
+        if (Year == t.Year && Month == t.Month && Day == t.Day)
+            return true;
+        else
+            return false;
+    }
+//    friend ostream &operator<<(ostream &, const YearMonthDay &);
+};
+
+class Stat // 储存统计信息的类
+{
+private:
+    YearMonthDay Date; // 日期
+    int CreatCardCount; // 创建卡次数
+    int DeleteCardCount; // 注销卡次数
+    int DepositCount; // 储值次数
+    int RefundCount; // 退费次数
+    int ConsumeCount; // 消费次数
+    double DepositAmount; // 储值量
+    double RefundAmount; // 退费量
+    double ConsumeAmount; // 消费量
+public:
+    /* 构造函数 */
+    Stat()
+    {
+        Date = {0, 0, 0};
+        CreatCardCount = 0;
+        DeleteCardCount = 0;
+        DepositCount = 0;
+        RefundCount = 0;
+        ConsumeCount = 0;
+        DepositAmount = 0.0;
+        RefundAmount = 0.0;
+        ConsumeAmount = 0.0;
+    }
+    Stat(const YearMonthDay &val)
+    {
+        Date = val;
+        CreatCardCount = 0;
+        DeleteCardCount = 0;
+        DepositCount = 0;
+        RefundCount = 0;
+        ConsumeCount = 0;
+        DepositAmount = 0.0;
+        RefundAmount = 0.0;
+        ConsumeAmount = 0.0;
+    }
+
+    /* 内联成员函数 */
+    YearMonthDay GetDate() { return Date; }
+    void SetDate(const YearMonthDay &val) { Date = val; }
+    void CreatCard(const double &val)
+    {
+        CreatCardCount++;
+        Deposit(val);
+    }
+    void DeleteCard(const double &val)
+    {
+        DeleteCardCount++;
+        Refund(val);
+    }
+    void Deposit(const double &val)
+    {
+        DepositCount++;
+        DepositAmount += val;
+    }
+    void Refund(const double &val)
+    {
+        RefundCount++;
+        RefundAmount += val;
+    }
+    void Consume(const double &val)
+    {
+        ConsumeCount++;
+        ConsumeAmount += val;
+    }
+//    int cntCreatCard() { return CreatCardCount; }
+//    int cntDeleteCard() { return DeleteCardCount; }
+//    int cntDeposit() { return DepositCount; }
+//    int cntRefund() { return RefundCount; }
+//    int cntConsume() { return ConsumeCount; }
+//    double valDeposit() { return DepositAmount; }
+//    double valRefund() { return RefundAmount; }
+//    double valConsume() { return ConsumeAmount; }
+
+    /* 一般成员函数 */
+    void Print(); // 输出
+
+    /* 重载运算符 */
+    friend ostream &operator<<(ostream &, const Stat &);
+    friend istream &operator>>(istream &, Stat &);
+    Stat operator+(const Stat &a)
+    {
+        Stat tmp;
+        tmp.CreatCardCount = CreatCardCount + a.CreatCardCount;
+        tmp.DeleteCardCount = DeleteCardCount + a.DeleteCardCount;
+        tmp.DepositCount = DepositCount + a.DepositCount;
+        tmp.RefundCount = RefundCount + a.RefundCount;
+        tmp.ConsumeCount = ConsumeCount + a.ConsumeCount;
+        tmp.DepositAmount = DepositAmount + a.DepositAmount;
+        tmp.RefundAmount = RefundAmount + a.RefundAmount;
+        tmp.ConsumeAmount = ConsumeAmount + a.ConsumeAmount;
+        return tmp;
+    }
+};
+
+#endif //EXPERIMENTAMS_CLASS_H
