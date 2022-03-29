@@ -175,3 +175,30 @@ void PrintStat(int year, int month, int day)
     cout << setw(110) << setfill('-') << "" << setfill(' ') << endl;
     sum.Print();
 }
+
+void PrintStat(const YearMonthDay &start, const YearMonthDay &end)
+{
+    cout << setw(110) << setfill('=') << "" << setfill(' ') << endl;
+    cout << left << setw(15) << "日期"
+         << left << setw(12) << "消费数"
+         << left << setw(12) << "消费额"
+         << left << setw(12) << "新卡数"
+         << left << setw(12) << "充值数"
+         << left << setw(12) << "充值额"
+         << left << setw(12) << "退卡数"
+         << left << setw(12) << "退费数"
+         << left << setw(12) << "退费额"
+         << endl;
+    Stat sum;
+    for (auto stat: StatData)
+    {
+        YearMonthDay date = stat.second.GetDate();
+        if (start <= date && date <= end)
+        {
+            sum = sum + stat.second;
+            stat.second.Print();
+        }
+    }
+    cout << setw(110) << setfill('-') << "" << setfill(' ') << endl;
+    sum.Print();
+}

@@ -629,24 +629,82 @@ void Admin_Price()
 void Admin_Stat()
 {
     cout << "========收益统计========" << endl;
-    int year = 0, month = 0, day = 0;
+    int select;
+    cout << "1. 按年/月/日统计" << endl
+         << "2. 按时间段统计" << endl
+         << "0. 返回" << endl;
     while (true)
     {
-        cout << "选择统计范围。（可用0表示缺省，缺省写法可且仅可使用2022 0 0和2022 3 0）" << endl
-             << "请输入(YYYY MM DD): ";
-        if (cin >> year >> month >> day && year >= 1900 && year <= 2100 &&
-            month >= 0 && month <= 12 && day >= 0 && day <= 31)
-        {
+        cout << "请选择操作(0~2): ";
+        if (InputCheck_Int(select, 0, 2))
             break;
-        }
         else
-        {
-            cin.clear();
-            cin.ignore(1024, '\n');
             cout << "输入非法" << endl;
-        }
     }
-    Clear();
-    PrintStat(year, month, day);
+    if (select == 0)
+    {
+        return;
+    }
+    else if (select == 1)
+    {
+        int year = 0, month = 0, day = 0;
+        while (true)
+        {
+            cout << "选择统计范围，可用0表示缺省，缺省写法例如\"2022 0 0\"和\"2022 3 0\"" << endl
+                 << "请输入(YYYY MM DD): ";
+            if (cin >> year >> month >> day && year >= 1900 && year <= 2100 &&
+                month >= 0 && month <= 12 && day >= 0 && day <= 31)
+            {
+                break;
+            }
+            else
+            {
+                cin.clear();
+                cin.ignore(1024, '\n');
+                cout << "输入非法" << endl;
+            }
+        }
+        Clear();
+        PrintStat(year, month, day);
+    }
+    else if (select == 2)
+    {
+        YearMonthDay start, end;
+        int year, month, day;
+        while (true)
+        {
+            cout << "请输入开始日期(YYYY MM DD): ";
+            if (cin >> year >> month >> day && year >= 1900 && year <= 2100 &&
+                month >= 1 && month <= 12 && day >= 1 && day <= 31)
+            {
+                break;
+            }
+            else
+            {
+                cin.clear();
+                cin.ignore(1024, '\n');
+                cout << "输入非法" << endl;
+            }
+        }
+        start = {year, month, day};
+        while (true)
+        {
+            cout << "请输入截止日期(YYYY MM DD): ";
+            if (cin >> year >> month >> day && year >= 1900 && year <= 2100 &&
+                month >= 1 && month <= 12 && day >= 1 && day <= 31)
+            {
+                break;
+            }
+            else
+            {
+                cin.clear();
+                cin.ignore(1024, '\n');
+                cout << "输入非法" << endl;
+            }
+        }
+        end = {year, month, day};
+        Clear();
+        PrintStat(start, end);
+    }
     Pause();
 }

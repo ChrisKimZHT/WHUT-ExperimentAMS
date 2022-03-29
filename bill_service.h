@@ -38,6 +38,8 @@ Price ChangePrice(double, double, double, int, int); // 修改价格
 
 void StatUpdate(int, double, time_t= time(nullptr)); // 更新统计 0-创卡 1-注销 2-储值 3-退费 4-消费
 
-void PrintStat(int, int, int); // 输出统计
+void PrintStat(int, int, int); // 输出统计-按年/月/日
+
+void PrintStat(const YearMonthDay &, const YearMonthDay &); // 输出统计-按区域
 
 #endif //EXPERIMENTAMS_BILL_SERVICE_H

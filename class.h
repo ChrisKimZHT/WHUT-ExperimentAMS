@@ -207,6 +207,15 @@ struct YearMonthDay // 年月日结构体
         else
             return false;
     }
+    bool operator<=(const YearMonthDay &t) const
+    {
+        if (Year != t.Year)
+            return Year < t.Year;
+        else if (Month != t.Month)
+            return Month < t.Month;
+        else
+            return Day <= t.Day;
+    }
     bool operator==(const YearMonthDay &t) const
     {
         if (Year == t.Year && Month == t.Month && Day == t.Day)

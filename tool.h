@@ -9,7 +9,6 @@
 #include <cstdlib>
 #include <vector>
 #include <cfloat>
-//#include "class.h"
 
 using namespace std;
 
