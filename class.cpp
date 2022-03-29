@@ -66,7 +66,7 @@ istream &operator>>(istream &is, Card &card)
     return is;
 }
 
-void Bill::Print()
+void Bill::Print() const
 {
     string dict_type[] = {"按量付费", "包夜", "包天"};
     if (Type != -1)
@@ -135,17 +135,17 @@ istream &operator>>(istream &is, Bill &bill)
     return is;
 }
 
-void Price::Print()
+void Price::Print() const
 {
-    std::cout << std::left << std::setw(15) << "半小时价格: " << "￥"
-              << std::fixed << std::setprecision(2) << PricePerHalfHour << std::endl
-              << std::left << std::setw(15) << "包夜价格: " << "￥"
-              << std::fixed << std::setprecision(2) << PriceWholeNight << std::endl
-              << std::left << std::setw(15) << "包天价格: " << "￥"
-              << std::fixed << std::setprecision(2) << PriceWholeDay << std::endl
-              << std::left << std::setw(15) << "包夜时间段: "
+    cout << left << setw(15) << "半小时价格: " << "￥"
+              << fixed << setprecision(2) << PricePerHalfHour << endl
+              << left << setw(15) << "包夜价格: " << "￥"
+              << fixed << setprecision(2) << PriceWholeNight << endl
+              << left << setw(15) << "包天价格: " << "￥"
+              << fixed << setprecision(2) << PriceWholeDay << endl
+              << left << setw(15) << "包夜时间段: "
               << NightRange.first << '~' << NightRange.second
-              << std::endl;
+              << endl;
 }
 
 double Price::CalcFare(const time_t &start, const time_t &stop, const int &type) const
