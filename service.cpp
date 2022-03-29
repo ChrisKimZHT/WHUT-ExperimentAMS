@@ -61,16 +61,18 @@ void CreatCard()
     Pause();
 }
 
-void QueryCard()
+void QueryCard(bool is_admin)
 {
     cout << "========查询卡========" << endl;
+    if (is_admin)
+        cout << "[!] 当前为管理员查询模式，密码将会显示" << endl;
     string name;
     cout << "输入待查卡号: ";
     cin >> name;
     Clear();
     cout << "========查询成功========" << endl;
     if (IsExist(name))
-        PrintCard(name);
+        PrintCard(name, is_admin);
     else
         FuzzyPrintCard(name);
     Pause();
@@ -699,5 +701,5 @@ void Admin_Stat()
 
 void Admin_Card()
 {
-    ;
+    QueryCard(true);
 }

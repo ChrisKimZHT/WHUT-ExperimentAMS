@@ -3,7 +3,7 @@
 
 /* 用户功能 */
 void CreatCard(); // 操作：创建
-void QueryCard(); // 操作：查询
+void QueryCard(bool= false); // 操作：查询
 void Price(); // 操作：查看价格
 void Login(); // 操作：上机
 void Logoff(); // 操作：下机

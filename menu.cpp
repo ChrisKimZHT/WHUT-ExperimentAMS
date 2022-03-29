@@ -182,17 +182,18 @@ void Index_Admin_Auth()
 void Index_Admin()
 {
     cout << "====================" << endl
-         << "计费管理系统 -> 管理" << endl
+         << "计费管理系统 -> 管理员" << endl
          << "====================" << endl
-         << "1. 查看收益" << endl
-         << "2. 价格设置" << endl
-         << "3. 登出" << endl
+         << "1. 查询卡" << endl
+         << "2. 查看收益" << endl
+         << "3. 价格设置" << endl
+         << "4. 登出管理员" << endl
          << "0. 返回" << endl
          << "输入操作选项前序号(0~3): ";
     int select;
     while (true)
     {
-        if (InputCheck_Int(select, 0, 3))
+        if (InputCheck_Int(select, 0, 4))
             break;
         else
             cout << "输入非法" << endl;
@@ -201,13 +202,17 @@ void Index_Admin()
     {
         case 1:
             Clear();
-            Admin_Stat();
+            Admin_Card();
             break;
         case 2:
             Clear();
-            Admin_Price();
+            Admin_Stat();
             break;
         case 3:
+            Clear();
+            Admin_Price();
+            break;
+        case 4:
             ADMIN_LOGIN = false;
             break;
         default:

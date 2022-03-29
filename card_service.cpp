@@ -23,9 +23,12 @@ bool IsExist(const string &name)
         return false;
 }
 
-void PrintCard(const string &name)
+void PrintCard(const string &name, bool is_admin)
 {
-    CardData[name].Print();
+    if (is_admin)
+        CardData[name].PrintDetailed();
+    else
+        CardData[name].Print();
 }
 
 void FuzzyPrintCard(const string &name)
