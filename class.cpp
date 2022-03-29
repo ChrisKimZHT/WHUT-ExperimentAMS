@@ -34,6 +34,22 @@ void Card::PrintBrief()
          << endl;
 }
 
+void Card::PrintDetailed()
+{
+    string status[4] = {"未使用", "[使用中]", "[已注销]"};
+    string settle[2] = {"[未结清]", "已结清"};
+    cout << left << setw(12) << "卡号：" << CardName << endl
+         << left << setw(12) << "密码：" << CardPassword << endl
+         << left << setw(12) << "状态：" << status[CardStatus] << ' ' << settle[IsSettled] << endl
+         << left << setw(12) << "余额：" << "￥" << fixed << setprecision(2) << Balance << endl
+         << left << setw(12) << "累计消费：" << "￥" << fixed << setprecision(2) << TotalUse << endl
+         << left << setw(12) << "使用次数：" << UseCount << "次" << endl
+         << left << setw(12) << "创建时间：" << Date2str(CreatTime) << endl
+         << left << setw(12) << "上次使用：" << Date2str(LastTime) << endl;
+    if (CardStatus == 2)
+        cout << left << setw(12) << "注销时间：" << Date2str(DeleteTime) << endl;
+}
+
 bool Card::CheckPassword(const string &pwd)
 {
     if (CardPassword == pwd)
@@ -138,14 +154,14 @@ istream &operator>>(istream &is, Bill &bill)
 void Price::Print() const
 {
     cout << left << setw(15) << "半小时价格: " << "￥"
-              << fixed << setprecision(2) << PricePerHalfHour << endl
-              << left << setw(15) << "包夜价格: " << "￥"
-              << fixed << setprecision(2) << PriceWholeNight << endl
-              << left << setw(15) << "包天价格: " << "￥"
-              << fixed << setprecision(2) << PriceWholeDay << endl
-              << left << setw(15) << "包夜时间段: "
-              << NightRange.first << '~' << NightRange.second
-              << endl;
+         << fixed << setprecision(2) << PricePerHalfHour << endl
+         << left << setw(15) << "包夜价格: " << "￥"
+         << fixed << setprecision(2) << PriceWholeNight << endl
+         << left << setw(15) << "包天价格: " << "￥"
+         << fixed << setprecision(2) << PriceWholeDay << endl
+         << left << setw(15) << "包夜时间段: "
+         << NightRange.first << '~' << NightRange.second
+         << endl;
 }
 
 double Price::CalcFare(const time_t &start, const time_t &stop, const int &type) const

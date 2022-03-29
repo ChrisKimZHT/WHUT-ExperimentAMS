@@ -13,7 +13,7 @@ int main()
     do
     {
         Index_Master();
-        if (InputCheck_Int(select, 0, 4))
+        if (InputCheck_Int(select, 0, 3))
             Menu(select);
         else
             cout << "ÊäÈëÒì³£" << endl;

@@ -61,41 +61,18 @@ void CreatCard()
     Pause();
 }
 
-void QueryCard(bool choice)
+void QueryCard()
 {
     cout << "========查询卡========" << endl;
-//    bool choice;
-//    while (true)
-//    {
-//        cout << "是否模糊查询？(Y/N): ";
-//        if (InputCheck_YN(choice))
-//            break;
-//        else
-//            cout << "[!] 输入非法" << endl;
-//    }
     string name;
     cout << "输入待查卡号: ";
     cin >> name;
     Clear();
-    if (choice)
-    {
-        cout << "========查询成功========" << endl;
-        FuzzyPrintCard(name);
-        cout << "获取详情需使用精确查询" << endl;
-    }
+    cout << "========查询成功========" << endl;
+    if (IsExist(name))
+        PrintCard(name);
     else
-    {
-        if (IsExist(name))
-        {
-            cout << "========查询成功========" << endl;
-            PrintCard(name);
-        }
-        else
-        {
-            cout << "========查询失败========" << endl
-                 << "[!] 未查询到该卡号" << endl;
-        }
-    }
+        FuzzyPrintCard(name);
     Pause();
 }
 
@@ -718,4 +695,9 @@ void Admin_Stat()
         PrintStat(start, end);
     }
     Pause();
+}
+
+void Admin_Card()
+{
+    ;
 }

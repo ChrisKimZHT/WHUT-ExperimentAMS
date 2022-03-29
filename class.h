@@ -56,6 +56,7 @@ public:
     /* 一般成员函数 */
     void Print(); // 直接输出Card的信息
     void PrintBrief(); // 单行紧凑输出Card的信息
+    void PrintDetailed(); // 详细输出Card信息（包括密码）
     bool CheckPassword(const std::string &); // 比对账号密码用于上机登录
     bool Charge(double); // 收费
 

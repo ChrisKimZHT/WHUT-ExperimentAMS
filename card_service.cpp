@@ -34,11 +34,19 @@ void FuzzyPrintCard(const string &name)
          << left << setw(22) << "余额"
          << left << setw(13) << "备注"
          << endl;
+    int cnt = 0;
     for (auto card: CardData)
     {
         if (StrMatch(card.first, name))
+        {
+            cnt++;
             card.second.PrintBrief();
+        }
     }
+    if (cnt)
+        cout << "[!] 该卡号片段对应多个卡号，若要查询细节，请输入完整卡号。" << endl;
+    else
+        cout << "[!] 未查询到该卡号。" << endl;
 }
 
 bool PasswordCheck(const string &name, const string &password)
