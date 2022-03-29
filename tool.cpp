@@ -1,5 +1,8 @@
+#include <iostream>
+#include <ctime>
+#include <string>
+#include <vector>
 #include "tool.h"
-#include "class.h"
 
 using namespace std;
 

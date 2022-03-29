@@ -1,6 +1,15 @@
+#include <iostream>
+#include "service.h"
+#include "global_var.h"
+#include "tool.h"
 #include "menu.h"
 
 using namespace std;
+
+void Init()
+{
+    Load_All();
+}
 
 void Index_Master()
 {

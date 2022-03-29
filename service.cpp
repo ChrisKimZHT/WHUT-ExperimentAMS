@@ -1,4 +1,15 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <string>
+#include "card_service.h"
+#include "bill_service.h"
+#include "global_var.h"
+#include "tool.h"
+#include "class.h"
 #include "service.h"
+
+using namespace std;
 
 void CreatCard()
 {

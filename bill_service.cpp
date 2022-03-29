@@ -1,4 +1,14 @@
+#include <iostream>
+#include <string>
+#include <utility>
+#include <vector>
+#include <map>
+#include <iomanip>
+#include "card_service.h"
+#include "bill_file.h"
 #include "bill_service.h"
+
+using namespace std;
 
 map<string, vector<Bill>> BillData;
 map<YearMonthDay, Stat> StatData;

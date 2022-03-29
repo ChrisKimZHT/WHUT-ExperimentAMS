@@ -1,3 +1,6 @@
+#include <map>
+#include <string>
+#include <fstream>
 #include "card_file.h"
 
 using namespace std;

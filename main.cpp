@@ -1,12 +1,13 @@
 #include <iostream>
 #include "menu.h"
+#include "tool.h"
 
 using namespace std;
 
 int main()
 {
     // 初始化
-    Load_All();
+    Init();
     // 程序本体
     int select = -1;
     do

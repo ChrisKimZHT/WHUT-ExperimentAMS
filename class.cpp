@@ -1,4 +1,12 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <iomanip>
+#include <cstdio>
+#include "tool.h"
 #include "class.h"
+
+using namespace std;
 
 void Card::Print()
 {
@@ -125,6 +133,19 @@ istream &operator>>(istream &is, Bill &bill)
     is >> bill.CardName >> bill.StartTime >> bill.EndTime
        >> bill.Fare >> bill.Type >> bill.IsPaid;
     return is;
+}
+
+void Price::Print()
+{
+    std::cout << std::left << std::setw(15) << "半小时价格: " << "￥"
+              << std::fixed << std::setprecision(2) << PricePerHalfHour << std::endl
+              << std::left << std::setw(15) << "包夜价格: " << "￥"
+              << std::fixed << std::setprecision(2) << PriceWholeNight << std::endl
+              << std::left << std::setw(15) << "包天价格: " << "￥"
+              << std::fixed << std::setprecision(2) << PriceWholeDay << std::endl
+              << std::left << std::setw(15) << "包夜时间段: "
+              << NightRange.first << '~' << NightRange.second
+              << std::endl;
 }
 
 double Price::CalcFare(const time_t &start, const time_t &stop, const int &type) const

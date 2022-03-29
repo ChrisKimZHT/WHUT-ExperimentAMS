@@ -1,11 +1,7 @@
 #ifndef EXPERIMENTAMS_MENU_H
 #define EXPERIMENTAMS_MENU_H
 
-#include <iostream>
-#include <iomanip>
-#include "service.h"
-#include "tool.h"
-
+void Init(); // 初始化
 void Menu(int); // 菜单选择
 void Index_Master(); // 主目录
 void Index_Consume(); // 消费目录

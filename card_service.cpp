@@ -1,4 +1,12 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <map>
 #include "card_service.h"
+#include "card_file.h"
+#include "tool.h"
+
+using namespace std;
 
 map<string, Card> CardData;
 

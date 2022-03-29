@@ -1,21 +1,11 @@
 #ifndef EXPERIMENTAMS_CLASS_H
 #define EXPERIMENTAMS_CLASS_H
 
-#include <string>
-#include <ctime>
-#include <utility>
-#include <iostream>
-#include <cstdio>
-#include "tool.h"
-#include <cmath>
-
-using namespace std;
-
 class Card // 储存卡的类
 {
 private:
-    string CardName; // 卡号
-    string CardPassword; // 密码
+    std::string CardName; // 卡号
+    std::string CardPassword; // 密码
     int CardStatus; // 0-未使用 1-使用中 2-已注销
     time_t CreatTime; // 创建时间
     time_t DeleteTime; // 注销时间
@@ -27,7 +17,7 @@ private:
 public:
     /* 构造函数 */
     Card() { ; } // 默认构造函数
-    Card(const string &name, const string &password, const double &money) // 构造函数
+    Card(const std::string &name, const std::string &password, const double &money) // 构造函数
     {
         CardName = name;
         CardPassword = password;
@@ -42,7 +32,7 @@ public:
     }
 
     /* 内联成员函数 */
-    string Name() { return CardName; } // 获取卡名
+    std::string Name() { return CardName; } // 获取卡名
     int Status() const { return CardStatus; } // 获取卡状态
     double GetBalance() const { return Balance; } // 获取余额
     int SettleStat() const { return IsSettled; } // 获取结清状态
@@ -61,23 +51,23 @@ public:
         CardStatus = 2;
         DeleteTime = time(nullptr);
     }
-    void SetPassword(const string &password) { CardPassword = password; } // 更新密码
+    void SetPassword(const std::string &password) { CardPassword = password; } // 更新密码
 
     /* 一般成员函数 */
     void Print(); // 直接输出Card的信息
     void PrintBrief(); // 单行紧凑输出Card的信息
-    bool CheckPassword(const string &); // 比对账号密码用于上机登录
+    bool CheckPassword(const std::string &); // 比对账号密码用于上机登录
     bool Charge(double); // 收费
 
     /* 重载运算符 */
-    friend ostream &operator<<(ostream &, const Card &);
-    friend istream &operator>>(istream &, Card &);
+    friend std::ostream &operator<<(std::ostream &, const Card &);
+    friend std::istream &operator>>(std::istream &, Card &);
 };
 
 class Bill // 储存账单的类
 {
 private:
-    string CardName; // 卡号
+    std::string CardName; // 卡号
     time_t StartTime; // 上机时间
     time_t EndTime; // 下机时间
     double Fare; // 金额
@@ -86,7 +76,7 @@ private:
 public:
     /* 构造函数 */
     Bill() { ; } // 默认构造函数
-    Bill(const string &name, const int &type) // 构造函数-上机账单
+    Bill(const std::string &name, const int &type) // 构造函数-上机账单
     {
         CardName = name;
         StartTime = time(nullptr);
@@ -95,7 +85,7 @@ public:
         Fare = 0;
         Type = type;
     }
-    Bill(const string &name, const double &value) // 构造函数-充退账单
+    Bill(const std::string &name, const double &value) // 构造函数-充退账单
     {
         CardName = name;
         StartTime = time(nullptr);
@@ -109,7 +99,7 @@ public:
     void SetEnd(time_t t) { EndTime = t; } // 设置结束日期
     void SetPaid() { IsPaid = true; } // 设置结清
     void SetFare(double f) { Fare = f; } // 设置费用
-    string GetName() { return CardName; } // 获取卡号
+    std::string GetName() { return CardName; } // 获取卡号
     bool Paid() const { return IsPaid; } // 获取是否结清
     int GetType() const { return Type; } // 获取种类
     time_t GetStart() const { return StartTime; } // 获取开始时间
@@ -120,8 +110,8 @@ public:
     void Print(); // 输出Bill的信息
 
     /* 重载运算符 */
-    friend ostream &operator<<(ostream &, const Bill &);
-    friend istream &operator>>(istream &, Bill &);
+    friend std::ostream &operator<<(std::ostream &, const Bill &);
+    friend std::istream &operator>>(std::istream &, Bill &);
 };
 
 class Price // 储存计费的类
@@ -130,7 +120,7 @@ private:
     double PricePerHalfHour;
     double PriceWholeNight;
     double PriceWholeDay;
-    pair<int, int> NightRange;
+    std::pair<int, int> NightRange;
 public:
     /* 构造函数 */
     Price() // 默认构造函数
@@ -151,21 +141,15 @@ public:
     }
 
     /* 内联成员函数 */
-    pair<int, int> GetNightRange() { return NightRange; } // 获取包夜范围
-    void Print() // 输出价格
-    {
-        cout << left << setw(15) << "半小时价格: " << "￥" << fixed << setprecision(2) << PricePerHalfHour << endl
-             << left << setw(15) << "包夜价格: " << "￥" << fixed << setprecision(2) << PriceWholeNight << endl
-             << left << setw(15) << "包天价格: " << "￥" << fixed << setprecision(2) << PriceWholeDay << endl
-             << left << setw(15) << "包夜时间段: " << NightRange.first << '~' << NightRange.second << endl;
-    }
+    std::pair<int, int> GetNightRange() { return NightRange; } // 获取包夜范围
 
     /* 一般成员函数 */
+    void Print(); // 输出价格
     double CalcFare(const time_t &, const time_t &, const int &) const; // 计算费用 0-半小时计费 1-包夜 2-包天
 
     /* 重载运算符 */
-    friend ostream &operator<<(ostream &, const Price &);
-    friend istream &operator>>(istream &, Price &);
+    friend std::ostream &operator<<(std::ostream &, const Price &);
+    friend std::istream &operator>>(std::istream &, Price &);
 };
 
 struct YearMonthDay // 年月日结构体
@@ -223,7 +207,7 @@ struct YearMonthDay // 年月日结构体
         else
             return false;
     }
-//    friend ostream &operator<<(ostream &, const YearMonthDay &);
+//    friend std::ostream &operator<<(std::ostream &, const YearMonthDay &);
 };
 
 class Stat // 储存统计信息的类
@@ -306,8 +290,8 @@ public:
     void Print(); // 输出
 
     /* 重载运算符 */
-    friend ostream &operator<<(ostream &, const Stat &);
-    friend istream &operator>>(istream &, Stat &);
+    friend std::ostream &operator<<(std::ostream &, const Stat &);
+    friend std::istream &operator>>(std::istream &, Stat &);
     Stat operator+(const Stat &a)
     {
         Stat tmp;

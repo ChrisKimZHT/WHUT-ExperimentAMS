@@ -1,3 +1,7 @@
+#include <vector>
+#include <fstream>
+#include <map>
+#include <string>
 #include "bill_file.h"
 
 using namespace std;
