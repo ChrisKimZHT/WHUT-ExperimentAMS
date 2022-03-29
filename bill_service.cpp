@@ -124,15 +124,16 @@ void StatUpdate(int type, double val, time_t t)
 
 void PrintStat(int year, int month, int day)
 {
+    cout << setw(110) << setfill('=') << "" << setfill(' ') << endl;
     cout << left << setw(15) << "日期"
-         << left << setw(10) << "消费数"
-         << left << setw(10) << "消费额"
-         << left << setw(10) << "新卡数"
-         << left << setw(10) << "充值数"
-         << left << setw(10) << "充值额"
-         << left << setw(10) << "退卡数"
-         << left << setw(10) << "退费数"
-         << left << setw(10) << "退费额"
+         << left << setw(12) << "消费数"
+         << left << setw(12) << "消费额"
+         << left << setw(12) << "新卡数"
+         << left << setw(12) << "充值数"
+         << left << setw(12) << "充值额"
+         << left << setw(12) << "退卡数"
+         << left << setw(12) << "退费数"
+         << left << setw(12) << "退费额"
          << endl;
     Stat sum;
     if (month == 0 && day == 0)
@@ -171,6 +172,6 @@ void PrintStat(int year, int month, int day)
             }
         }
     }
-    cout << setw(95) << setfill('-') << "" << setfill(' ') << endl;
+    cout << setw(110) << setfill('-') << "" << setfill(' ') << endl;
     sum.Print();
 }

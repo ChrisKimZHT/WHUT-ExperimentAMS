@@ -646,6 +646,7 @@ void Admin_Stat()
             cout << "ÊäÈë·Ç·¨" << endl;
         }
     }
+    Clear();
     PrintStat(year, month, day);
     Pause();
 }

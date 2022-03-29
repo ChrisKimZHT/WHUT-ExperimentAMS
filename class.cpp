@@ -204,14 +204,14 @@ ostream &operator<<(ostream &os, const YearMonthDay &ymd)
 void Stat::Print()
 {
     cout << left << setw(15) << Date
-         << left << setw(10) << ConsumeCount
-         << left << setw(10) << fixed << setprecision(2) << ConsumeAmount
-         << left << setw(10) << CreatCardCount
-         << left << setw(10) << DepositCount
-         << left << setw(10) << fixed << setprecision(2) << DepositAmount
-         << left << setw(10) << DeleteCardCount
-         << left << setw(10) << RefundCount
-         << left << setw(10) << fixed << setprecision(2) << RefundAmount
+         << left << setw(12) << ConsumeCount
+         << left << setw(12) << fixed << setprecision(2) << ConsumeAmount
+         << left << setw(12) << CreatCardCount
+         << left << setw(12) << DepositCount
+         << left << setw(12) << fixed << setprecision(2) << DepositAmount
+         << left << setw(12) << DeleteCardCount
+         << left << setw(12) << RefundCount
+         << left << setw(12) << fixed << setprecision(2) << RefundAmount
          << endl;
 }
 
