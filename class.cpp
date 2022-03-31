@@ -52,6 +52,7 @@ bool Card::Charge(double fare)
     if (Balance < fare)
         return false;
     Balance -= fare;
+    TotalUse += fare;
     return true;
 }
 
