@@ -8,12 +8,14 @@
 
 using namespace std;
 
-void Card::Print()
+void Card::Print(bool is_admin)
 {
     string status[4] = {"未使用", "[使用中]", "[已注销]"};
     string settle[2] = {"[未结清]", "已结清"};
-    cout << left << setw(12) << "卡号：" << CardName << endl
-         << left << setw(12) << "状态：" << status[CardStatus] << ' ' << settle[IsSettled] << endl
+    cout << left << setw(12) << "卡号：" << CardName << endl;
+    if (is_admin)
+        cout << left << setw(12) << "密码：" << CardPassword << endl;
+    cout << left << setw(12) << "状态：" << status[CardStatus] << ' ' << settle[IsSettled] << endl
          << left << setw(12) << "余额：" << "￥" << fixed << setprecision(2) << Balance << endl
          << left << setw(12) << "累计消费：" << "￥" << fixed << setprecision(2) << TotalUse << endl
          << left << setw(12) << "使用次数：" << UseCount << "次" << endl
@@ -23,31 +25,18 @@ void Card::Print()
         cout << left << setw(12) << "注销时间：" << Date2str(DeleteTime) << endl;
 }
 
-void Card::PrintBrief()
+void Card::PrintOneline()
 {
-    string status[4] = {" 未使用 ", "[使用中]", "[已注销]"};
-    string settle[2] = {"[未结清]", " 已结清 "};
-    cout << left << setw(20) << CardName
-         << "￥"
-         << left << setw(15) << fixed << setprecision(2) << Balance
+    string status[4] = {"", "[使用中]", "[已注销]"};
+    string settle[2] = {"[未结清]", ""};
+    cout << left << setw(16) << CardName
+         << left << setw(16) << CardPassword
+         << "￥" << left << setw(16) << fixed << setprecision(2) << Balance
+         << "￥" << left << setw(16) << fixed << setprecision(2) << TotalUse
+         << left << setw(8) << UseCount
+         << left << setw(24) << Date2str(CreatTime)
          << left << setw(20) << status[CardStatus] + ' ' + settle[IsSettled]
          << endl;
-}
-
-void Card::PrintDetailed()
-{
-    string status[4] = {"未使用", "[使用中]", "[已注销]"};
-    string settle[2] = {"[未结清]", "已结清"};
-    cout << left << setw(12) << "卡号：" << CardName << endl
-         << left << setw(12) << "密码：" << CardPassword << endl
-         << left << setw(12) << "状态：" << status[CardStatus] << ' ' << settle[IsSettled] << endl
-         << left << setw(12) << "余额：" << "￥" << fixed << setprecision(2) << Balance << endl
-         << left << setw(12) << "累计消费：" << "￥" << fixed << setprecision(2) << TotalUse << endl
-         << left << setw(12) << "使用次数：" << UseCount << "次" << endl
-         << left << setw(12) << "创建时间：" << Date2str(CreatTime) << endl
-         << left << setw(12) << "上次使用：" << Date2str(LastTime) << endl;
-    if (CardStatus == 2)
-        cout << left << setw(12) << "注销时间：" << Date2str(DeleteTime) << endl;
 }
 
 bool Card::CheckPassword(const string &pwd)

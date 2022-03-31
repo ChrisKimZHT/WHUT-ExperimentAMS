@@ -6,7 +6,8 @@
 void SaveCard(const std::string &, const Card &); // 保存卡
 bool IsExist(const std::string &); // 查询是否存在该卡
 void PrintCard(const std::string &, bool); // 输出该卡
-void FuzzyPrintCard(const std::string &); // 模糊输出该卡
+void PrintSimilarCard(const std::string &name); // 模糊输出该卡
+void PrintAllCard(); // 输出所有卡
 bool PasswordCheck(const std::string &, const std::string &); // 单纯账号密码检测
 int CheckLogin(const std::string &, const std::string &); // 登录 0-成功 1-不存在/账号或密码错误 2-已登录 3-卡已注销 4-账单未结清
 int CheckLogoff(const std::string &, const std::string &); // 登出 0-成功 1-不存在/账号或密码错误 2-已登出 3-卡已注销

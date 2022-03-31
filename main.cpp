@@ -19,7 +19,7 @@ int main()
             cout << "输入异常" << endl;
     } while (select);
     // 程序结束
-    cout << "程序结束" << endl;
+    cout << "[!] 程序结束" << endl;
     Pause();
     return 0;
 }

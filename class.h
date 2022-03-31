@@ -54,9 +54,8 @@ public:
     void SetPassword(const std::string &password) { CardPassword = password; } // 更新密码
 
     /* 一般成员函数 */
-    void Print(); // 直接输出Card的信息
-    void PrintBrief(); // 单行紧凑输出Card的信息
-    void PrintDetailed(); // 详细输出Card信息（包括密码）
+    void Print(bool= false); // 直接输出Card的信息，若为管理员则同时输出密码
+    void PrintOneline(); // 单行输出Card的信息
     bool CheckPassword(const std::string &); // 比对账号密码用于上机登录
     bool Charge(double); // 收费
 

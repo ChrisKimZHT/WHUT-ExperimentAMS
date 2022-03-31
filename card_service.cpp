@@ -25,31 +25,46 @@ bool IsExist(const string &name)
 
 void PrintCard(const string &name, bool is_admin)
 {
-    if (is_admin)
-        CardData[name].PrintDetailed();
-    else
-        CardData[name].Print();
+    CardData[name].Print(is_admin);
 }
 
-void FuzzyPrintCard(const string &name)
+void PrintSimilarCard(const string &name)
 {
-    cout << left << setw(21) << "卡号"
-         << left << setw(22) << "余额"
-         << left << setw(13) << "备注"
-         << endl;
     int cnt = 0;
+    string buf;
     for (auto card: CardData)
     {
         if (StrMatch(card.first, name))
         {
             cnt++;
-            card.second.PrintBrief();
+            buf += card.second.Name() + '\n';
         }
     }
     if (cnt)
-        cout << "[!] 该卡号片段对应多个卡号，若要查询细节，请输入完整卡号。" << endl;
+    {
+        cout << "[!] 以下多个卡号对应该卡号片段，请输入完整卡号继续查询。" << endl;
+        cout << buf;
+    }
     else
+    {
         cout << "[!] 未查询到该卡号。" << endl;
+    }
+}
+
+void PrintAllCard()
+{
+    cout << left << setw(16) << "卡号"
+         << left << setw(16) << "密码"
+         << left << setw(18) << "余额"
+         << left << setw(18) << "累计消费"
+         << left << setw(8) << "次数"
+         << left << setw(24) << "创建时间"
+         << left << setw(20) << "备注"
+         << endl;
+    for (auto card: CardData)
+        card.second.PrintOneline();
+    cout << setfill('-') << setw(110) << "" << setfill(' ') << endl;
+    cout << "共计：" << CardData.size() << "张" << endl;
 }
 
 bool PasswordCheck(const string &name, const string &password)

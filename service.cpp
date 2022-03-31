@@ -67,14 +67,24 @@ void QueryCard(bool is_admin)
     if (is_admin)
         cout << "[!] 当前为管理员查询模式，密码将会显示" << endl;
     string name;
-    cout << "输入待查卡号: ";
-    cin >> name;
-    Clear();
-    cout << "========查询成功========" << endl;
-    if (IsExist(name))
-        PrintCard(name, is_admin);
-    else
-        FuzzyPrintCard(name);
+    while (true)
+    {
+        cout << "输入待查卡号(可输入q终止查询): ";
+        cin >> name;
+        if (name == "q" || name.empty())
+            break;
+        Clear();
+        cout << "========查询成功========" << endl;
+        if (IsExist(name))
+        {
+            PrintCard(name, is_admin);
+            break;
+        }
+        else
+        {
+            PrintSimilarCard(name);
+        }
+    }
     Pause();
 }
 
@@ -701,5 +711,28 @@ void Admin_Stat()
 
 void Admin_Card()
 {
-    QueryCard(true);
+    cout << "========查询卡========" << endl;
+    cout << "1. 单卡查询" << endl
+         << "2. 输出所有卡" << endl
+         << "0. 返回" << endl;
+    int choice;
+    while (true)
+    {
+        cout << "选择查询模式(0~2): ";
+        if (InputCheck_Int(choice, 0, 2))
+            break;
+        else
+            cout << "输入非法" << endl;
+    }
+    Clear();
+    if (choice == 1)
+    {
+        QueryCard(true);
+    }
+    else if (choice == 2)
+    {
+        cout << "========查询成功========" << endl;
+        PrintAllCard();
+        Pause();
+    }
 }
