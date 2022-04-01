@@ -4,7 +4,6 @@
 #include <vector>
 #include <map>
 #include <iomanip>
-#include "card_service.h"
 #include "bill_file.h"
 #include "bill_service.h"
 
@@ -24,7 +23,7 @@ void CreatBill(const string &name, const double &value)
     BillData[name].push_back(Bill(name, value));
 }
 
-double CompleteBill(const string &name)
+double GetIncompleteBill(const string &name)
 {
     // 从尾到头遍历用户账单
     for (auto it = BillData[name].rbegin(); it != BillData[name].rend(); ++it)
@@ -38,21 +37,23 @@ double CompleteBill(const string &name)
                 it->SetEnd(time(nullptr));
                 it->SetFare(PriceData.CalcFare(it->GetStart(), it->GetEnd(), it->GetType()));
             }
-            if (Charge(name, it->GetFare()))
-            {
-                SetPaid(name);
-                it->SetPaid();
-                StatUpdate(4, it->GetFare(), it->GetEnd());
-                StatDataSave();
-                return it->GetFare();
-            }
-            else // 如果不够支付，那么用负数代表支付失败
-            {
-                return -it->GetFare();
-            }
+            return it->GetFare();
         }
     }
     return 0;
+}
+
+void CompleteBill(const string &name)
+{
+    for (auto it = BillData[name].rbegin(); it != BillData[name].rend(); ++it)
+    {
+        if (!it->Paid())
+        {
+            it->SetPaid();
+            StatUpdate(4, it->GetFare(), it->GetEnd());
+            StatDataSave();
+        }
+    }
 }
 
 pair<int, int> GetNightRange()

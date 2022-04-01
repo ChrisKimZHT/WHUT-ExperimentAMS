@@ -5,7 +5,8 @@
 
 void CreatBill(const std::string &, const int &); // 新建账单-上机账单
 void CreatBill(const std::string &, const double &); // 新建账单-充退账单
-double CompleteBill(const std::string &); // 结算账单
+double GetIncompleteBill(const std::string &name); // 获取未结账单价格
+void CompleteBill(const std::string &); // 完成订单
 std::pair<int, int> GetNightRange(); // 获取定价
 void PrintBill(const std::string &); // 打印账单
 int BillDataSave(); // 保存账单

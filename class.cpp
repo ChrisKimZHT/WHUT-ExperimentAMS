@@ -35,7 +35,7 @@ void Card::PrintOneline()
          << "гд" << left << setw(16) << fixed << setprecision(2) << TotalUse
          << left << setw(8) << UseCount
          << left << setw(24) << Date2str(CreatTime)
-         << left << setw(20) << status[CardStatus] + ' ' + settle[IsSettled]
+         << left << setw(20) << status[CardStatus] + settle[IsSettled]
          << endl;
 }
 

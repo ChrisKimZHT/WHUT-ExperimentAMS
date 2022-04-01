@@ -205,16 +205,18 @@ void Logoff()
     {
         cout << "========下机成功========" << endl
              << "下机时间: " << Date2str(time(nullptr)) << endl;
-        double cost = CompleteBill(name);
-        if (cost >= 0)
+        double cost = GetIncompleteBill(name);
+        if (Charge(name, cost))
         {
+            SetPaid(name);
+            CompleteBill(name);
             cout << "缴费成功！" << endl;
             printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", cost, GetBalance(name));
         }
         else
         {
             cout << "[!] 缴费失败，余额不足！" << endl;
-            printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", -cost, GetBalance(name));
+            printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", cost, GetBalance(name));
         }
         Save_Card();
         Save_Bill();
@@ -259,15 +261,17 @@ void Deposit()
             cout << left << setw(16) << "充值金额: " << "￥" << fixed << setprecision(2) << money << endl;
             if (!IsSettled(name))
             {
-                double cost = CompleteBill(name);
-                if (cost >= 0)
+                double cost = GetIncompleteBill(name);
+                if (Charge(name, cost))
                 {
+                    SetPaid(name);
+                    CompleteBill(name);
                     cout << left << setw(16) << "未结账单扣除: " << "￥" << fixed << setprecision(2) << cost << endl;
                     SetPaid(name);
                 }
                 else
                 {
-                    cout << "[!] 当前仍有￥" << fixed << setprecision(2) << -cost << "未结账单，该卡仍不可用" << endl;
+                    cout << "[!] 当前仍有￥" << fixed << setprecision(2) << cost << "未结账单，该卡仍不可用" << endl;
                 }
             }
             cout << "------------------------" << endl
