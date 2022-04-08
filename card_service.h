@@ -1,6 +1,7 @@
 #ifndef EXPERIMENTAMS_CARD_SERVICE_H
 #define EXPERIMENTAMS_CARD_SERVICE_H
 
+#include "linklist.h"
 #include "class.h"
 
 void SaveCard(const std::string &, const Card &); // ±£´æ¿¨

@@ -1,25 +1,24 @@
-#include <map>
 #include <string>
 #include <fstream>
 #include "card_file.h"
 
 using namespace std;
 
-int CardFileSave(map<string, Card> &CardData)
+int CardFileSave(linklist<Card> &CardData)
 {
     int cnt = 0;
     ofstream CardDataFile;
     CardDataFile.open("./CardData.txt", ios::out);
-    for (auto &card: CardData)
+    for (int i = 0; i < CardData.size(); i++)
     {
-        CardDataFile << card.second;
+        CardDataFile << CardData[i];
         cnt++;
     }
     CardDataFile.close();
     return cnt;
 }
 
-int CardFileLoad(map<string, Card> &CardData)
+int CardFileLoad(linklist<Card> &CardData)
 {
     int cnt = 0;
     Card temp;
@@ -28,7 +27,7 @@ int CardFileLoad(map<string, Card> &CardData)
     CardData.clear();
     while (CardDataFile >> temp)
     {
-        CardData[temp.Name()] = temp;
+        CardData.push_front(temp);
         cnt++;
     }
     CardDataFile.close();
