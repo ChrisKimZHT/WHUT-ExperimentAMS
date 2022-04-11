@@ -8,6 +8,7 @@
 #include "tool.h"
 #include "class.h"
 #include "service.h"
+#include "stat_service.h"
 
 using namespace std;
 
@@ -205,18 +206,20 @@ void Logoff()
     {
         cout << "========下机成功========" << endl
              << "下机时间: " << Date2str(time(nullptr)) << endl;
-        double cost = GetIncompleteBill(name);
-        if (Charge(name, cost))
+        auto bill = GetIncompleteBill(name);
+        if (Charge(name, bill.first))
         {
             SetPaid(name);
             CompleteBill(name);
+            StatUpdate(4, bill.first, bill.second);
+            StatDataSave();
             cout << "缴费成功！" << endl;
-            printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", cost, GetBalance(name));
+            printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", bill, GetBalance(name));
         }
         else
         {
             cout << "[!] 缴费失败，余额不足！" << endl;
-            printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", cost, GetBalance(name));
+            printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", bill, GetBalance(name));
         }
         Save_Card();
         Save_Bill();
@@ -261,17 +264,19 @@ void Deposit()
             cout << left << setw(16) << "充值金额: " << "￥" << fixed << setprecision(2) << money << endl;
             if (!IsSettled(name))
             {
-                double cost = GetIncompleteBill(name);
-                if (Charge(name, cost))
+                auto bill = GetIncompleteBill(name);
+                if (Charge(name, bill.first))
                 {
                     SetPaid(name);
                     CompleteBill(name);
-                    cout << left << setw(16) << "未结账单扣除: " << "￥" << fixed << setprecision(2) << cost << endl;
+                    StatUpdate(4, bill.first, bill.second);
+                    StatDataSave();
+                    cout << left << setw(16) << "未结账单扣除: " << "￥" << fixed << setprecision(2) << bill.first << endl;
                     SetPaid(name);
                 }
                 else
                 {
-                    cout << "[!] 当前仍有￥" << fixed << setprecision(2) << cost << "未结账单，该卡仍不可用" << endl;
+                    cout << "[!] 当前仍有￥" << fixed << setprecision(2) << bill.first << "未结账单，该卡仍不可用" << endl;
                 }
             }
             cout << "------------------------" << endl

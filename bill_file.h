@@ -7,7 +7,5 @@ int BillFileSave(std::map<std::string, std::vector<Bill>> &); // 文件储存
 int BillFileLoad(std::map<std::string, std::vector<Bill>> &); // 文件读取
 void PriceFileSave(Price &); // 文件储存
 void PriceFileLoad(Price &); // 文件读取
-int StatFileSave(std::map<YearMonthDay, Stat> &); // 文件储存
-int StatFileLoad(std::map<YearMonthDay, Stat> &); // 文件读取
 
 #endif //EXPERIMENTAMS_BILL_FILE_H
