@@ -58,7 +58,7 @@ pair<int, int> GetNightRange()
     return PriceData.GetNightRange();
 }
 
-void PrintBill(const string &name)
+void PrintBill(const string &name, int year, int month, int day)
 {
     cout << left << setw(5) << ""
          << left << setw(12) << "类别"
@@ -67,8 +67,58 @@ void PrintBill(const string &name)
          << left << setw(25) << "下机时间"
          << left << setw(8) << "备注"
          << endl;
-    for (const auto& bill: BillData[name])
-        bill.Print();
+    if (month == 0 && day == 0)
+    {
+        for (const auto &bill: BillData[name])
+        {
+            if (YearMonthDay(bill.GetEnd()).Year == year)
+            {
+                bill.Print();
+            }
+        }
+    }
+    else if (month != 0 && day == 0)
+    {
+        for (const auto &bill: BillData[name])
+        {
+            if (YearMonthDay(bill.GetEnd()).Year == year &&
+                YearMonthDay(bill.GetEnd()).Month == month)
+            {
+                bill.Print();
+            }
+        }
+    }
+    else if (month != 0)
+    {
+        for (const auto &bill: BillData[name])
+        {
+            if (YearMonthDay(bill.GetEnd()).Year == year &&
+                YearMonthDay(bill.GetEnd()).Month == month &&
+                YearMonthDay(bill.GetEnd()).Day == day)
+            {
+                bill.Print();
+            }
+        }
+    }
+}
+
+void PrintBill(const string &name, YearMonthDay start, YearMonthDay end)
+{
+    cout << left << setw(5) << ""
+         << left << setw(12) << "类别"
+         << left << setw(14) << "金额"
+         << left << setw(25) << "上机时间"
+         << left << setw(25) << "下机时间"
+         << left << setw(8) << "备注"
+         << endl;
+    for (const auto &bill: BillData[name])
+    {
+        YearMonthDay date{bill.GetEnd()};
+        if (start <= date && date <= end)
+        {
+            bill.Print();
+        }
+    }
 }
 
 int BillDataSave()
