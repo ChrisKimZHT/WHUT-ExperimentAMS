@@ -214,12 +214,12 @@ void Logoff()
             StatUpdate(4, bill.first, bill.second);
             StatDataSave();
             cout << "缴费成功！" << endl;
-            printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", bill, GetBalance(name));
+            printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", bill.first, GetBalance(name));
         }
         else
         {
             cout << "[!] 缴费失败，余额不足！" << endl;
-            printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", bill, GetBalance(name));
+            printf("本次消费: ￥%.2lf\n卡余额: ￥%.2lf\n", bill.first, GetBalance(name));
         }
         Save_Card();
         Save_Bill();
