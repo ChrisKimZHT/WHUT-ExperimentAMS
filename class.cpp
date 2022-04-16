@@ -3,6 +3,7 @@
 #include <ctime>
 #include <iomanip>
 #include <cstdio>
+#include <cmath>
 #include "tool.h"
 #include "class.h"
 
@@ -262,4 +263,18 @@ istream &operator>>(istream &is, Stat &stat)
        >> stat.DepositAmount >> stat.RefundAmount
        >> stat.ConsumeAmount;
     return is;
+}
+
+Stat Stat::operator/(const int &a) const
+{
+    Stat tmp;
+    tmp.CreatCardCount = ceil(1.0 * CreatCardCount / a);
+    tmp.DeleteCardCount = ceil(1.0 * DeleteCardCount / a);
+    tmp.DepositCount = ceil(1.0 * DepositCount / a);
+    tmp.RefundCount = ceil(1.0 * RefundCount / a);
+    tmp.ConsumeCount = ceil(1.0 * ConsumeCount / a);
+    tmp.DepositAmount = ceil(1.0 * DepositAmount / a);
+    tmp.RefundAmount = ceil(1.0 * RefundAmount / a);
+    tmp.ConsumeAmount = ceil(1.0 * ConsumeAmount / a);
+    return tmp;
 }

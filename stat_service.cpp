@@ -50,6 +50,7 @@ void PrintStat(int year, int month, int day)
          << left << setw(12) << "ÍË·Ñ¶î"
          << endl;
     Stat sum;
+    int cnt = 0;
     if (month == 0 && day == 0)
     {
         for (auto stat: StatData)
@@ -58,6 +59,7 @@ void PrintStat(int year, int month, int day)
             {
                 sum = sum + stat.second;
                 stat.second.Print();
+                cnt++;
             }
         }
     }
@@ -70,6 +72,7 @@ void PrintStat(int year, int month, int day)
             {
                 sum = sum + stat.second;
                 stat.second.Print();
+                cnt++;
             }
         }
     }
@@ -83,11 +86,13 @@ void PrintStat(int year, int month, int day)
             {
                 sum = sum + stat.second;
                 stat.second.Print();
+                cnt++;
             }
         }
     }
     cout << setw(110) << setfill('-') << "" << setfill(' ') << endl;
     sum.Print();
+    (sum / cnt).Print();
 }
 
 void PrintStat(const YearMonthDay &start, const YearMonthDay &end)
@@ -104,6 +109,7 @@ void PrintStat(const YearMonthDay &start, const YearMonthDay &end)
          << left << setw(12) << "ÍË·Ñ¶î"
          << endl;
     Stat sum;
+    int cnt = 0;
     for (auto stat: StatData)
     {
         YearMonthDay date = stat.second.GetDate();
@@ -111,8 +117,10 @@ void PrintStat(const YearMonthDay &start, const YearMonthDay &end)
         {
             sum = sum + stat.second;
             stat.second.Print();
+            cnt++;
         }
     }
     cout << setw(110) << setfill('-') << "" << setfill(' ') << endl;
     sum.Print();
+    (sum / cnt).Print();
 }

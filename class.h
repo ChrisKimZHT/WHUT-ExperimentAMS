@@ -298,6 +298,7 @@ public:
         tmp.ConsumeAmount = ConsumeAmount + a.ConsumeAmount;
         return tmp;
     }
+    Stat operator/(const int &a) const;
 };
 
 #endif //EXPERIMENTAMS_CLASS_H
