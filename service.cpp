@@ -273,6 +273,7 @@ void Deposit()
                     StatDataSave();
                     cout << left << setw(16) << "未结账单扣除: " << "￥" << fixed << setprecision(2) << bill.first << endl;
                     SetPaid(name);
+                    Save_Card();
                 }
                 else
                 {
@@ -456,6 +457,7 @@ void QueryBill()
     }
     else
     {
+        Clear();
         cout << "========查询失败========" << endl
              << "[!] 该卡不存在" << endl;
     }
