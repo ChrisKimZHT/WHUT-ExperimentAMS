@@ -251,7 +251,7 @@ void Deposit()
             {
                 cout << "当前余额: ￥" << fixed << setprecision(2) << GetBalance(name) << endl
                      << "请输入充值金额: ￥";
-                if (InputCheck_Double(money, 0))
+                if (InputCheck_Double(money, 0.01))
                     break;
                 else
                     cout << "[!] 数据非法" << endl;
@@ -324,7 +324,7 @@ void Refund()
             while (true)
             {
                 cout << "请输入退费金额: ￥";
-                if (InputCheck_Double(money, 0))
+                if (InputCheck_Double(money, 0.01))
                     break;
                 else
                     cout << "[!] 数据非法" << endl;
