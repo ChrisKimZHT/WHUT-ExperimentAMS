@@ -88,7 +88,7 @@ bool InputCheck_Int(int &var, int lim_min, int lim_max)
 {
     int temp;
     cin >> temp;
-    if (cin.good())
+    if (cin.good() && cin.get() == '\n')
     {
         if (temp >= lim_min && temp <= lim_max)
         {
@@ -127,7 +127,7 @@ bool InputCheck_Double(double &var, double lim_min, double lim_max)
 {
     double temp;
     cin >> temp;
-    if (cin.good())
+    if (cin.good() && cin.get() == '\n')
     {
         if (temp >= lim_min && temp <= lim_max)
         {
